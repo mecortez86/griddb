@@ -1,0 +1,49 @@
+CREATE TABLE `antecedentes comerciales` (
+  `id_antecedentes_comerciales` int NOT NULL,
+  `cuil` int NOT NULL,
+  `veraz` varchar(100) NOT NULL,
+  `bcra` varchar(100) NOT NULL,
+  `arba` varchar(100) NOT NULL,
+  PRIMARY KEY (`id_antecedentes_comerciales`),
+  KEY `cuil_idx` (`cuil`),
+  CONSTRAINT `cuil` FOREIGN KEY (`cuil`) REFERENCES `contacto` (`cuil`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `contacto` (
+  `cuil` int NOT NULL,
+  `nombre_y_apellido` text NOT NULL,
+  `telefono` varchar(13) NOT NULL,
+  `direccion` varchar(60) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `ID Microempresa` int NOT NULL,
+  PRIMARY KEY (`cuil`),
+  KEY `ID Microempresa_idx` (`ID Microempresa`),
+  CONSTRAINT `id_microempresa` FOREIGN KEY (`ID Microempresa`) REFERENCES `microempresa` (`id_microempresa`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `microempresa` (
+  `id_microempresa` int NOT NULL,
+  `antiguedad` int NOT NULL,
+  `tipo_de_credito` varchar(60) NOT NULL,
+  `localidad` varchar(30) NOT NULL,
+  PRIMARY KEY (`id_microempresa`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `prestamo` (
+  `id_prestamo` int NOT NULL,
+  `cuil` int NOT NULL,
+  `id_visita` int NOT NULL,
+  `monto` varchar(30) NOT NULL,
+  `plaza` varchar(30) NOT NULL,
+  PRIMARY KEY (`id_prestamo`),
+  KEY `cuil_idx` (`cuil`),
+  KEY `id_visita_idx` (`id_visita`),
+  CONSTRAINT `id_visita` FOREIGN KEY (`id_visita`) REFERENCES `visita` (`id_visita`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `visita` (
+  `id_visita` int NOT NULL,
+  `ejecutivo_comercial` varchar(60) NOT NULL,
+  `tipo_de_credito` varchar(60) NOT NULL,
+  PRIMARY KEY (`id_visita`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
